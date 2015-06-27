@@ -11,8 +11,11 @@ gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'react-rails'
-
-
+gem 'react-router-rails', '~>0.13.3'
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'autoprefixer-rails'
+gem 'bourbon'
+gem 'neat'
 
 
 group :development, :test do

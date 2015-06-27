@@ -37,8 +37,16 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     arel (6.0.0)
+    autoprefixer-rails (5.2.1)
+      execjs
+      json
     binding_of_caller (0.7.2)
       debug_inspector (>= 0.0.1)
+    bootstrap-sass (3.2.0.2)
+      sass (~> 3.2)
+    bourbon (4.2.3)
+      sass (~> 3.4)
+      thor
     builder (3.2.2)
     byebug (5.0.0)
       columnize (= 0.9.0)
@@ -73,6 +81,9 @@ GEM
     mini_portile (0.6.2)
     minitest (5.7.0)
     multi_json (1.11.1)
+    neat (1.7.2)
+      bourbon (>= 4.0)
+      sass (>= 3.3)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     pg (0.18.2)
@@ -112,6 +123,9 @@ GEM
       execjs
       rails (>= 3.1)
       react-source (~> 0.13)
+    react-router-rails (0.13.3)
+      rails (>= 3.1)
+      react-rails (>= 0.12)
     react-source (0.13.3)
     sass (3.4.15)
     sass-rails (5.0.3)
@@ -148,13 +162,18 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  autoprefixer-rails
+  bootstrap-sass (~> 3.2.0)
+  bourbon
   byebug
   coffee-rails (~> 4.1.0)
   jbuilder (~> 2.0)
   jquery-rails
+  neat
   pg
   rails (= 4.2.1)
   react-rails
+  react-router-rails (~> 0.13.3)
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   spring

@@ -1,7 +1,7 @@
 /** @jsx React.DOM */
 
-var RouteHandler = ReactRouter.RouteHandler,
-    Link = ReactRouter.Link;
+var RouteHandler = ReactRouter.RouteHandler;
+var Link = ReactRouter.Link;
 
 var App = React.createClass({
   render: function() {
@@ -15,22 +15,18 @@ var App = React.createClass({
             <a href="javascript:void(0)" className="navigation-menu-button" id="js-mobile-menu">MENU</a>
             <nav role="navigation">
               <ul id="js-navigation-menu" className="navigation-menu show">
-                <li className="nav-link">Home</li>
-                <li className="nav-link right-link">Sign Up</li>
-                <li className="nav-link right-link">Logout</li>
+                <li className="nav-link"><Link to="/">Home</Link></li>
+                <li className="nav-link right-link"><Link to="/calendar">Calendar</Link></li>
+                <li className="nav-link right-link"><Link to="/map">Map</Link></li>
                 <li className="nav-link right-link">Logged in as:</li>
               </ul>
             </nav>
           </div>
         </header>
-
-        <div className="well">
-          <Link to='/'>Discover</Link>
-          <Link to='/calendar'>Calendar</Link>
-          <Link to='/map'>Map</Link>
+        <br/>
+        <div className="container-fluid">
+          <RouteHandler />
         </div>
-
-        <RouteHandler />
       </div>
     );
   }

@@ -17,6 +17,7 @@ gem 'autoprefixer-rails'
 gem 'bourbon'
 gem 'neat'
 gem 'bcrypt'
+gem 'pry'
 
 
 group :development, :test do

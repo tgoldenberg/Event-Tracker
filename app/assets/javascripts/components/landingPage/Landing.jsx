@@ -2,8 +2,7 @@ var Landing = React.createClass({
   render: function() {
     return (
       <div className="landing">
-        <LandingNav />
-        <div className="container-fluid"><br/>
+        <div className="container-fluid">
           <LandingHero />
           <LoginSidebar />
         </div>

@@ -1,13 +1,13 @@
 Rails.application.routes.draw do
-  get 'sessions/login'
+  post 'sessions/login' => 'sessions#login', as: 'login'
 
-  get 'sessions/create'
+  delete 'sessions/logout' => 'sessions#logout', as: 'logout'
 
-  get 'sessions/logout'
+  get 'users/new' => 'users#new', as: 'signup'
 
-  get 'users/new'
+  resources :users
 
-  get 'users/create'
+  post 'users/' => 'users#create', as: 'create_user_registration'
 
   root 'pages#home'
 end

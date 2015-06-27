@@ -13,6 +13,7 @@ var Nav = React.createClass({
               <li className="nav-link right-link"><Link to="/calendar">Calendar</Link></li>
               <li className="nav-link right-link"><Link to="/map">Map</Link></li>
               <li className="nav-link right-link">Logged in as:</li>
+              <li className="nav-link right-link"><a href="/sessions/logout" data-method="delete">Logout</a></li>
             </ul>
           </nav>
         </div>

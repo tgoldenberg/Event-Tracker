@@ -10,7 +10,6 @@ var App = React.createClass({
   render: function() {
     return (
       <div>
-        <Nav/>
         <br/>
         <div className="container-fluid">
           <RouteHandler />

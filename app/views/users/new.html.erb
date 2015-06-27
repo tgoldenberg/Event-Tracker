@@ -1,2 +1,26 @@
-<h1>Users#new</h1>
-<p>Find me in app/views/users/new.html.erb</p>
+<div class="container-fluid">
+  <br/>
+  <div class="well hero-panel">
+    <h1>Signup</h1>
+  </div>
+  <hr/>
+  <%= form_for @user do |f| %>
+    <% if @user.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+        <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <%= f.text_field :username, class: "form-control", placeholder: "Username" %><br/>
+    <%= f.text_field :city, class: "form-control", placeholder: "City" %><br/>
+    <%= f.text_field :state, class: "form-control", placeholder: "State" %><br/>
+    <%= f.text_field :country, class: "form-control", placeholder: "County" %><br/>
+    <%= f.password_field :password, class: "form-control", placeholder: "Password" %><br/>
+    <%= f.submit "Signup", class: "submit-button" %>
+  <% end %>
+</div>

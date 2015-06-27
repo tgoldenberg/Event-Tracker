@@ -1,0 +1,37 @@
+.container, .container-fluid {
+  height: 100%;
+  background: #f7f7f7;
+}
+.col-md-4 {
+  background: #f7f7f7;
+  height: 100%;
+  min-height: 20em;
+}
+.col-sm-8 {
+  background: white;
+  min-height: 30em;
+}
+
+.login-holder {
+  border-bottom: 1px solid #e6e6e6;
+  padding-bottom: 2em;
+}
+li {
+  list-style-type: none;
+}
+.table-head {
+  background: $dark-red;
+  color: white;
+}
+.price-field {
+  max-width: 17em;
+  margin-left: 5px;
+  margin-bottom: 3px;
+  margin-top: 0;
+}
+.form-group {
+  font-size: 1.6em;
+}
+.form-control {
+  max-width: 35em;
+}

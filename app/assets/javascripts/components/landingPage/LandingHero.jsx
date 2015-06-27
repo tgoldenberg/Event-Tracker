@@ -2,6 +2,7 @@ var LandingHero = React.createClass({
   render: function() {
     return (
       <div className="hero-box col-sm-8">
+          <br/>
           <div className="well hero-panel">
             <h1>Sotracks</h1>
             <div className="search-tools">

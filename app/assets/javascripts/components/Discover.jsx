@@ -34,7 +34,9 @@ var Discover = React.createClass({
             </div>
             <Icons />
           </div>
+          <EventTable />
         </div>
+
       </div>
     );
   }

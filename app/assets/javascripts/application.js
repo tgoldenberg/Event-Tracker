@@ -20,7 +20,6 @@
 //= require react_router_ujs
 //= require moment
 //= require fullcalendar
+//= require reactable
 //= require components
-var foo = require('./foo');
-console.log(foo(3));
 //= require_tree .

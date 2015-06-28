@@ -19,6 +19,11 @@ gem 'neat'
 gem 'bcrypt'
 gem 'pry'
 
+source 'https://rails-assets.org' do
+  gem 'rails-assets-fullcalendar'
+  gem 'rails-assets-moment'
+end
+
 
 group :development, :test do
   gem 'byebug'

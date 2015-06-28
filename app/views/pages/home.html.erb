@@ -1,6 +1,6 @@
 <% if user_signed_in? %>
 
-  <%= react_router 'MyRoutes', current_user %>
+  <%= react_router 'MyRoutes', 'HashLocation', @data %>
 
 <% else %>
 

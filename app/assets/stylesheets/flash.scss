@@ -34,6 +34,10 @@ $success-color: #e6efc2 !default;
 
 .flash-notice {
   @include flash($notice-color);
+  margin-bottom:0;
+}
+#notice {
+  margin-bottom: 0;
 }
 
 .flash-success {

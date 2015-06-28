@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   get 'users/new' => 'users#new', as: 'signup'
 
+  get 'sessions/which_user' => 'sessions#which_user'
+
   resources :users
 
   post 'users/' => 'users#create', as: 'create_user_registration'

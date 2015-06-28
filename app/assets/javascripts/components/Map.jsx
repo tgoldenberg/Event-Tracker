@@ -1,7 +1,8 @@
 var Map = React.createClass({
   render: function() {
     return (
-      <div className="map">
+      <div className="map col-sm-11">
+        <br/>
         <div className="well hero-panel">
           <Icons/>
         </div>

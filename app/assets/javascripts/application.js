@@ -16,5 +16,7 @@
 //= require react_ujs
 //= require react_router
 //= require react_router_ujs
+//= require moment
+//= require fullcalendar
 //= require components
 //= require_tree .

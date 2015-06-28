@@ -10,7 +10,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'jquery-rails'
 gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
-gem 'react-rails'
+gem 'react-rails', '~> 1.0',  :git => 'git://github.com/reactjs/react-rails.git'
 gem 'react-router-rails', '~>0.13.3'
 gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'

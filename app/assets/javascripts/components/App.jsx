@@ -1,5 +1,3 @@
-/** @jsx React.DOM */
-
 var RouteHandler = ReactRouter.RouteHandler;
 var Link = ReactRouter.Link;
 

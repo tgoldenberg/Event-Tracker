@@ -1,0 +1,26 @@
+{
+  "name": "react-router-test-1",
+  "version": "1.0.0",
+  "description": "event app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tgoldenberg",
+  "license": "ISC",
+  "dependencies": {
+    "browserify": "^6.3.4",
+    "browserify-incremental": "^1.5.0",
+    "google-map-react": "^0.3.3",
+    "react": "^0.13.3"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tgoldenberg/react-router-test.com"
+  },
+  "bugs": {
+    "url": "https://github.com/tgoldenberg/react-router-test.com/issues"
+  },
+  "homepage": "https://github.com/tgoldenberg/react-router-test.com"
+}

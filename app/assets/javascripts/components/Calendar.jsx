@@ -12,9 +12,6 @@ var Calendar = React.createClass({
       selectable: true,
       selectHelper: true,
       editable: true,
-      eventSources: [{
-        url: '/events'
-      }],
       timeFormat: 'h:mm'
     });
   },

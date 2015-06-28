@@ -18,10 +18,12 @@ gem 'bourbon'
 gem 'neat'
 gem 'bcrypt'
 gem 'pry'
+gem "browserify-rails", "~> 0.7"
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-fullcalendar'
   gem 'rails-assets-moment'
+  gem 'rails-assets-google-map-react'
 end
 
 

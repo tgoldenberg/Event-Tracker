@@ -72,12 +72,15 @@ var App = React.createClass({
             var url  = ele.venue_detail_url;
             var location = ele.street_address + ", " + ele.neighborhood;
             var startTime = new Date(ele.recurring_start_date);
+            var category = ele.category;
+            var latitude = ele.geocode_latitude;
+            var longitude = ele.geocode_longitude;
             if (ele.recurring_end_date != undefined) {
               var endTime = new Date(ele.recurring_end_date);
             } else {
               var endTime = "N/A";
             }
-            prevData.push({name: <a href={url}>{name}</a>, location: location, startTime: startTime, endTime: endTime});
+            prevData.push({category: category, name: <a href={url}>{name}</a>, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude});
           }
         });
         this.setState({genericEvents: events, data: shuffle(prevData)});
@@ -112,8 +115,10 @@ var App = React.createClass({
             } else {
               var endTime = "n/A";
             }
-            var going = ele.yes_rsvp_count;
-            prevData.push({name: <a href={url}>{name}</a>, location: location, startTime: startTime.toString(), endTime: endTime.toString()})
+            var latitude = ele.venue ? ele.venue.lat : "";
+            var longitude = ele.venue ? ele.venue.lon : "";
+            var category = ele.group.who;
+            prevData.push({category: category, name: <a href={url}>{name}</a>, location: location, startTime: startTime.toString(), endTime: endTime.toString(), latitude: latitude, longitude: longitude})
           }
         });
         this.setState({genericEvents: events, data: shuffle(prevData)});
@@ -131,6 +136,7 @@ var App = React.createClass({
   },
 
   render: function() {
+    console.log(this.state.genericEvents);
 
     return (
       <div>

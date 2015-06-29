@@ -59,7 +59,10 @@ var Landing = React.createClass({
             } else {
               var endTime = "N/A";
             }
-            prevData.push({name: <a href={url}>{name}</a>, location: location, startTime: startTime, endTime: endTime});
+            var category = ele.category;
+            var latitude = ele.geocode_latitude;
+            var longitude = ele.geocode_longitude;
+            prevData.push({category: category, name: <a href={url}>{name}</a>, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude });
           }
         });
         this.setState({genericEvents: events, data: shuffle(prevData)});
@@ -94,8 +97,10 @@ var Landing = React.createClass({
             } else {
               var endTime = "n/A";
             }
-            var going = ele.yes_rsvp_count;
-            prevData.push({name: <a href={url}>{name}</a>, location: location, startTime: startTime.toString(), endTime: endTime.toString()})
+            var latitude = ele.venue? ele.venue.lat : "";
+            var longitude = ele.venue? ele.venue.lon : "";
+            var category = ele.group.who;
+            prevData.push({category: category, name: <a href={url}>{name}</a>, location: location, startTime: startTime.toString(), endTime: endTime.toString(), latitude: latitude, longitude: longitude})
           }
         });
         this.setState({genericEvents: events, data: shuffle(prevData)});

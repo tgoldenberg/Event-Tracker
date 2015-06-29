@@ -1,5 +1,6 @@
 var Discover = React.createClass({
   render: function() {
+
     return (
       <div className="discover">
         <MyFolders />
@@ -34,7 +35,7 @@ var Discover = React.createClass({
             </div>
             <Icons />
           </div>
-          <EventTable />
+          <EventTable events={this.props.events} />
         </div>
 
       </div>

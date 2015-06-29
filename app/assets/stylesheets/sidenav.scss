@@ -1,5 +1,5 @@
 .side-navbar {
-  height: 50em;
+  height: 100%;
   width: 5.5em;
   background: #222;
   .glyphicon {
@@ -19,4 +19,7 @@
 }
 .move-down {
   margin-top: 70%;
+}
+html, body, .my-routes, .container-fluid, .col-sm-11, .col-sm-3, .my-routes > div {
+  height: 100%;
 }

@@ -1,14 +1,12 @@
 var Table = Reactable.Table;
 
-
 var EventTable = React.createClass({
+  getInitialState: function() {
+    return {events: this.props.events};
+  },
   render: function() {
     return (
-      <Table className="table" sortable={['Name', 'Age', 'Position']} data={[
-              { Name: 'Griffin Smith', Age: 18 },
-              { Age: 23,  Name: 'Lee Salminen' },
-              { Age: 28, Position: 'Developer' },
-          ]} />
+      <Table className="table" sortable={['location', 'name', 'startTime']} data={this.state.events} />
     );
   }
 });

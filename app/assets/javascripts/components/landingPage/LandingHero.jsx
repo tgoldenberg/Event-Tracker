@@ -31,6 +31,7 @@ var LandingHero = React.createClass({
               </div>
             </div>
           </div>
+          <EventTable events={this.props.events} />
       </div>
     );
   }

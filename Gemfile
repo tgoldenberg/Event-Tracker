@@ -19,6 +19,9 @@ gem 'neat'
 gem 'bcrypt'
 gem 'pry'
 gem "browserify-rails", "~> 0.7"
+gem 'figaro'
+gem 'rack-cors', :require => 'rack/cors'
+
 
 source 'https://rails-assets.org' do
   gem 'rails-assets-fullcalendar'

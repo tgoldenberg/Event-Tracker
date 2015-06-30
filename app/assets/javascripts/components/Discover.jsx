@@ -1,4 +1,7 @@
 var Discover = React.createClass({
+  handleNewEvent: function(event) {
+    this.props.handleNewEvent(event);
+  },
   render: function() {
 
     return (
@@ -35,7 +38,7 @@ var Discover = React.createClass({
             </div>
             <Icons />
           </div>
-          <EventTable events={this.props.events} />
+          <EventTable events={this.props.events} user={this.props.user} handleNewEvent={this.handleNewEvent} />
         </div>
 
       </div>

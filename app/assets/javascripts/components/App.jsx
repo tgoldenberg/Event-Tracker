@@ -23,18 +23,17 @@ var eventbriteAPICall = eventbriteBaseURL + eventbriteVersion + "/events/search/
 
 var App = React.createClass({
   getInitialState: function() {
-    return {user: {}, genericEvents: {}, data: [], attendingEvents: []};
+    return {user: {}, genericEvents: {}, data: [], attendingEvents: [], userEvents: []};
   },
 
   componentWillMount: function() {
     // call for session user information
-
     $.ajax({
       url: "/sessions/which_user",
       method: "get",
       dataType: "json",
       success: function(data) {
-        this.setState({user: data});
+        this.setState({user: data.user, userEvents: data.events});
       }.bind(this),
       error: function(err) {
         console.log(err);
@@ -77,9 +76,9 @@ var App = React.createClass({
           if (ele.recurring_end_date != undefined) {
             var endTime = new Date(ele.recurring_end_date);
           } else {
-            var endTime = "N/A";
+            var endTime = "n/A";
           }
-          prevData.push({category: category, name: <a href={url}>{name}</a>, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude});
+          prevData.push({category: category, name: name, url: url, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude});
 
         });
         this.setState({genericEvents: events, data: shuffle(prevData)});
@@ -103,20 +102,19 @@ var App = React.createClass({
           var name = ele.name;
           var url = ele.event_url;
           var location = ele.venue ? ele.venue.name + ", " + ele.venue.address_1 : "";
-          var date1 = new Date(0);
-          var date2 = new Date(0); // The 0 there is the key, which sets the date to the epoch
-          date1.setUTCSeconds(parseInt(ele.time));
-          date2.setUTCSeconds((parseInt(ele.time) + parseInt(ele.duration)));
-          var startTime = date1;
-          if (endTime != undefined) {
-            var endTime = date2;
-          } else {
-            var endTime = "n/A";
+          var startTime = new Date(ele.time);
+          var date2 = new Date(ele.time); // The 0 there is the key, which sets the date to the epoch
+          var duration = ele.duration / 60000;
+          date2.setMinutes(date2.getMinutes() + duration);
+          var endTime = date2;
+          if ( !endTime.getTime()) {
+            endTime = "n/A";
           }
+
           var latitude = ele.venue ? ele.venue.lat : "";
           var longitude = ele.venue ? ele.venue.lon : "";
           var category = ele.group.who;
-          prevData.push({category: category, name: <a href={url}>{name}</a>, location: location, startTime: startTime.toString(), endTime: endTime.toString(), latitude: latitude, longitude: longitude})
+          prevData.push({category: category, name: name, url: url, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude})
 
         });
         this.setState({genericEvents: events, data: shuffle(prevData)});
@@ -127,6 +125,10 @@ var App = React.createClass({
       }
     });
   },
+  addEvent: function(events) {
+    console.log("ADD EVENT");
+    this.setState({userEvents: events});
+  },
 
   handleHover: function(e) {
     e.preventDefault();
@@ -134,7 +136,6 @@ var App = React.createClass({
   },
 
   render: function() {
-    console.log(this.state.genericEvents);
 
     return (
       <div>
@@ -143,7 +144,7 @@ var App = React.createClass({
             <SideNavbar />
           </div>
           <div className="col-sm-11" onMouseOver={this.handleHover}>
-            <RouteHandler events={this.state.data}/>
+            <RouteHandler events={this.state.data} user={this.state.user} handleNewEvent={this.addEvent} userEvents={this.state.userEvents}/>
           </div>
         </div>
       </div>

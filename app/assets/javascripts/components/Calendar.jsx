@@ -1,6 +1,12 @@
 var Calendar = React.createClass({
   componentDidMount: function() {
+    var events = this.props.userEvents;
+    var calendarEvents = events.map(function(event){
+      return {title: event.title, start: event.start_time, end: event.end_time};
+    });
+    console.log(this.props.userEvents);
     var calendar = $('#calendar').fullCalendar({
+      events: calendarEvents,
       theme: true,
       aspectRatio: 1.5,
       fixedWeekCount: false,
@@ -16,6 +22,26 @@ var Calendar = React.createClass({
     });
   },
   render: function() {
+    var events = this.props.userEvents;
+    var calendarEvents = events.map(function(event){
+      return {title: event.title, start: event.start_time, end: event.end_time};
+    });
+    console.log(this.props.userEvents);
+    var calendar = $('#calendar').fullCalendar({
+      events: calendarEvents,
+      theme: true,
+      aspectRatio: 1.5,
+      fixedWeekCount: false,
+      header: {
+        left: "prev, next today",
+        center: "title",
+        right: "month,agendaWeek,agendaDay"
+      },
+      selectable: true,
+      selectHelper: true,
+      editable: true,
+      timeFormat: 'h:mm'
+    });
     return (
       <div className="map col-sm-11">
         <br/>

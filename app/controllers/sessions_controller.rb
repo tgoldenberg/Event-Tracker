@@ -18,7 +18,7 @@ class SessionsController < ApplicationController
   def which_user
     @data = {}
     if current_user
-      @data = current_user.to_json
+      @data = {user: current_user, events: current_user.events }.to_json
     end
     render json: @data
   end

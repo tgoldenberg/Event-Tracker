@@ -12,4 +12,7 @@ Rails.application.routes.draw do
   post 'users/' => 'users#create', as: 'create_user_registration'
 
   root 'pages#home'
+
+  get 'events/add' => 'events#add', as: 'add_event'
+
 end

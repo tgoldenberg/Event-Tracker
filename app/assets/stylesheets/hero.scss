@@ -5,6 +5,11 @@
   margin-bottom: 0px;
   border: 0;
 }
+
+body {
+  height: 100%;
+  height: auto !important;
+}
 .normal-button:hover {
   text-decoration: none;
 }

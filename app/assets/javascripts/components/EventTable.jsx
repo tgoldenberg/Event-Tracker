@@ -10,21 +10,44 @@ var EventTable = React.createClass({
     var id = parseInt(target.context.dataset.id);
     var event = this.state.events[id];
     var user_id = parseInt(this.props.user.id);
-    $.ajax({
-      url: "/events/add",
-      method: "get",
-      dataType: "json",
-      data: {user_id: user_id, event: {title: event.name, category: event.category, url: event.url, location: event.location, latitude: event.latitude, longitude: event.longitude, start_time: event.startTime, end_time: event.endTime}},
-      success: function(data) {
-        console.log(data);
-        target.context.className = "submit-button glyphicon glyphicon-minus";
-        this.props.handleNewEvent(data);
+    var glyphiconClass = $(e.target).context.className;
 
-      }.bind(this),
-      error: function(err) {
-        console.log(err);
-      }
-    });
+    if (glyphiconClass.split(" ")[2] == "glyphicon-plus") {
+      $.ajax({
+        url: "/events/add",
+        method: "get",
+        dataType: "json",
+        data: {user_id: user_id, event: {title: event.name, category: event.category, url: event.url, location: event.location, latitude: event.latitude, longitude: event.longitude, start_time: event.startTime, end_time: event.endTime}},
+        success: function(data) {
+          console.log(data);
+          target.context.className = "submit-button glyphicon glyphicon-minus";
+          this.props.handleNewEvent(data);
+          return false;
+
+        }.bind(this),
+        error: function(err) {
+          console.log(err);
+        }
+      });
+    } else if (glyphiconClass.split(" ")[2] == "glyphicon-minus") {
+      $.ajax({
+        url: '/events/remove',
+        method: 'get',
+        dataType: 'json',
+        data: {user_id: user_id, event: {title: event.name }},
+        success: function(data) {
+          console.log(data);
+          target.context.className = "submit-button glyphicon glyphicon-plus";
+          this.props.handleNewEvent(data);
+          return false;
+        }.bind(this),
+
+        error: function(err) {
+          console.log(err);
+        }
+      });
+    }
+    return false;
   },
   render: function() {
 
@@ -35,10 +58,21 @@ var EventTable = React.createClass({
       weekday: "long", year: "numeric", month: "short",
       day: "numeric", hour: "2-digit", minute: "2-digit"
       };
-
+      var addButton;
+      var urls = [1, 2];
+      this.props.userEvents.map(function(e) {
+        urls.push(e.title);
+      });
+      urls.forEach(function(ele) {
+        if (ele == event.name) {
+          addButton = <a href="#" data-id={idx} onClick={this.handleClick} className="submit-button glyphicon glyphicon-minus"></a>;
+        } else {
+          addButton = <a href="#" data-id={idx} onClick={this.handleClick} className="submit-button glyphicon glyphicon-plus"></a>;
+        }
+      }.bind(this));
       var startTime = event.startTime.toLocaleTimeString("en-us", dateOptions);
       var endTime = event.endTime == "n/A" ? "n/A" : event.endTime.toLocaleTimeString("en-us", dateOptions);
-      eventTable.push({category: event.category, name: <a href={event.url}>{event.name}</a>, location: event.location, start_time: startTime, end_time: endTime, add: <a href="#" data-id={idx} onClick={this.handleClick} className="submit-button glyphicon glyphicon-plus"></a>});
+      eventTable.push({category: event.category, name: <a href={event.url}>{event.name}</a>, location: event.location, start_time: startTime, end_time: endTime, add: addButton});
     }.bind(this))
     return (
       <Table className="table" sortable={['location', 'name', 'startTime']} data={eventTable} itemsPerPage={10}/>

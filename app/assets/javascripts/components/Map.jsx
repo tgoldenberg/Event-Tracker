@@ -10,7 +10,7 @@ var Map = React.createClass({
       var mapCanvas = document.getElementById("map-canvas");
       var mapOptions = {
         center: new google.maps.LatLng(fordhamLatitude, fordhamLongitude),
-        zoom: 12,
+        zoom: 11,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       }
       var map = new google.maps.Map(mapCanvas, mapOptions);

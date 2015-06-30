@@ -23,7 +23,7 @@ var eventbriteAPICall = eventbriteBaseURL + eventbriteVersion + "/events/search/
 
 var App = React.createClass({
   getInitialState: function() {
-    return {user: {}, genericEvents: {}, data: []};
+    return {user: {}, genericEvents: {}, data: [], attendingEvents: []};
   },
 
   componentWillMount: function() {
@@ -67,21 +67,20 @@ var App = React.createClass({
         events.nyTimesEvents = data;
         prevData = this.state.data;
         events.nyTimesEvents.results.forEach(function(ele, idx) {
-          if (idx < 10) {
-            var name = ele.event_name;
-            var url  = ele.venue_detail_url;
-            var location = ele.street_address + ", " + ele.neighborhood;
-            var startTime = new Date(ele.recurring_start_date);
-            var category = ele.category;
-            var latitude = ele.geocode_latitude;
-            var longitude = ele.geocode_longitude;
-            if (ele.recurring_end_date != undefined) {
-              var endTime = new Date(ele.recurring_end_date);
-            } else {
-              var endTime = "N/A";
-            }
-            prevData.push({category: category, name: <a href={url}>{name}</a>, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude});
+          var name = ele.event_name;
+          var url  = ele.venue_detail_url;
+          var location = ele.street_address + ", " + ele.neighborhood;
+          var startTime = new Date(ele.recurring_start_date);
+          var category = ele.category;
+          var latitude = ele.geocode_latitude;
+          var longitude = ele.geocode_longitude;
+          if (ele.recurring_end_date != undefined) {
+            var endTime = new Date(ele.recurring_end_date);
+          } else {
+            var endTime = "N/A";
           }
+          prevData.push({category: category, name: <a href={url}>{name}</a>, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude});
+
         });
         this.setState({genericEvents: events, data: shuffle(prevData)});
       }.bind(this),
@@ -101,25 +100,24 @@ var App = React.createClass({
         events.meetupEvents = data;
         prevData = this.state.data;
         events.meetupEvents.results.forEach(function(ele, idx) {
-          if (idx < 10) {
-            var name = ele.name;
-            var url = ele.event_url;
-            var location = ele.venue ? ele.venue.name + ", " + ele.venue.address_1 : "";
-            var date1 = new Date(0);
-            var date2 = new Date(0); // The 0 there is the key, which sets the date to the epoch
-            date1.setUTCSeconds(parseInt(ele.time));
-            date2.setUTCSeconds((parseInt(ele.time) + parseInt(ele.duration)));
-            var startTime = date1;
-            if (endTime != undefined) {
-              var endTime = date2;
-            } else {
-              var endTime = "n/A";
-            }
-            var latitude = ele.venue ? ele.venue.lat : "";
-            var longitude = ele.venue ? ele.venue.lon : "";
-            var category = ele.group.who;
-            prevData.push({category: category, name: <a href={url}>{name}</a>, location: location, startTime: startTime.toString(), endTime: endTime.toString(), latitude: latitude, longitude: longitude})
+          var name = ele.name;
+          var url = ele.event_url;
+          var location = ele.venue ? ele.venue.name + ", " + ele.venue.address_1 : "";
+          var date1 = new Date(0);
+          var date2 = new Date(0); // The 0 there is the key, which sets the date to the epoch
+          date1.setUTCSeconds(parseInt(ele.time));
+          date2.setUTCSeconds((parseInt(ele.time) + parseInt(ele.duration)));
+          var startTime = date1;
+          if (endTime != undefined) {
+            var endTime = date2;
+          } else {
+            var endTime = "n/A";
           }
+          var latitude = ele.venue ? ele.venue.lat : "";
+          var longitude = ele.venue ? ele.venue.lon : "";
+          var category = ele.group.who;
+          prevData.push({category: category, name: <a href={url}>{name}</a>, location: location, startTime: startTime.toString(), endTime: endTime.toString(), latitude: latitude, longitude: longitude})
+
         });
         this.setState({genericEvents: events, data: shuffle(prevData)});
 

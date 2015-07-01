@@ -8,7 +8,7 @@ var EventTable = React.createClass({
     e.preventDefault();
     var target = $(e.target);
     var id = parseInt(target.context.dataset.id);
-    var event = this.state.events[id];
+    var event = this.props.events[id];
     var user_id = parseInt(this.props.user.id);
     var glyphiconClass = $(e.target).context.className;
 
@@ -52,7 +52,7 @@ var EventTable = React.createClass({
 
     var eventTable = [];
 
-    this.state.events.map(function(event, idx) {
+    this.props.events.map(function(event, idx) {
       var dateOptions = {
       weekday: "long", year: "numeric", month: "short",
       day: "numeric", hour: "2-digit", minute: "2-digit"

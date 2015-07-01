@@ -28,7 +28,7 @@ var App = React.createClass({
             data: [],
             attendingEvents: [],
             userEvents: [],
-            date: new Date(),
+            date: new Date().toLocaleString().split(",")[0],
             location: {
               latitude: fordhamLatitude,
               longitude: fordhamLongitude
@@ -47,49 +47,128 @@ var App = React.createClass({
 
   handleSearch: function() {
     // change AJAX search criteria
-    console.log("NEW SEARCH");
-    debugger
+    genericEvents = {};
+    apiData = [];
+
+    var month = this.state.date.split("/")[0];
+    var day = this.state.date.split("/")[1];
+    var year = this.state.date.split("/")[2];
+    month = month < 10 ? "0" + month : month;
+    day = day < 10 ? "0" + day : day;
+
+    var date = new Date(this.state.date);
+    var nextDate = new Date();
+    nextDate.setDate(date.getDate()+1);
+    nextDate = nextDate.toLocaleString().split(",")[0];
+
+    var nextMonth = nextDate.split("/")[0];
+    var nextDay = nextDate.split("/")[1];
+    var nextYear = nextDate.split("/")[2];
+    nextMonth = nextMonth < 10 ? "0" + nextMonth : nextMonth;
+    nextDay = nextDay < 10 ? "0" + nextDay : nextDay;
+    var ApiDateRange = "date_range=" + year + "-" + month + "-" + day + ":" + nextYear + "-" + nextMonth + "-" + nextDay;
+
+    var categoryFilter;
+    var categoryParams = this.state.checkboxSummary;
+
+    if (this.state.checkboxSummary == "All") {
+      categoryFilter = "";
+    } else {
+      switch(categoryParams) {
+        case "Music":
+
+        categoryFilter = "filters=category:(Jazz Classical)";
+        console.log(categoryFilter);
+        break;
+        case "Sports":
+        categoryFilter = "";
+        break;
+        case "Tech":
+        categoryFilter = "";
+        break;
+        case "Comedy":
+        categoryFilter = "";
+        break;
+        case "Arts":
+        categoryFilter = "filters=category: Art";
+        break;
+      }
+
+    }
+    console.log(categoryFilter);
+
+    $.ajax({
+      url: "http://api.nytimes.com/svc/events/v2/listings.jsonp?" + categoryFilter + "&limit=40&ll=40.862040%2C-73.885699&radius=12000&api-key=" + nyTimesKey,
+      method: "get",
+      dataType: "jsonp",
+      crossDomain: "true",
+      success: function(nyTimesData) {
+        var events = {};
+        console.log(nyTimesData);
+        events.nyTimesEvents = nyTimesData;
+        events.nyTimesEvents.results.forEach(function(ele, idx) {
+          var name = ele.event_name;
+          var url  = ele.venue_detail_url;
+          var location = ele.street_address + ", " + ele.neighborhood;
+          var startTime = new Date(ele.recurring_start_date);
+          var category = ele.category;
+          var latitude = ele.geocode_latitude;
+          var longitude = ele.geocode_longitude;
+          if (ele.recurring_end_date != undefined) {
+            var endTime = new Date(ele.recurring_end_date);
+          } else {
+            var endTime = "n/A";
+          }
+          apiData.push({category: category, name: name, url: url, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude});
+        });
+        console.log(apiData);
+        this.setState({data: apiData});
+
+      }.bind(this),
+      error: function(err) {
+        console.log(err);
+      }
+    });
   },
 
-  componentWillMount: function() {
-    // call for session user information
-    $.ajax({
-      url: "/sessions/which_user",
-      method: "get",
-      dataType: "json",
-      success: function(data) {
-        this.setState({user: data.user, userEvents: data.events});
-      }.bind(this),
-      error: function(err) {
-        console.log(err);
-      }
-    });
+  callAPIs: function() {
+    var genericEvents = this.state.genericEvents;
+    var data = this.state.data;
 
-    // call for Eventbrite event info
-    $.ajax({
-      url : eventbriteAPICall,
-      method: 'get',
-      dataType: 'json',
-      success: function(data) {
-        var events = this.state.genericEvents;
-        events.eventbriteEvents = data;
-        this.setState({genericEvents: events });
-      }.bind(this),
-      error: function(err) {
-        console.log(err);
-      }
-    });
+    var month = this.state.date.split("/")[0];
+    var day = this.state.date.split("/")[1];
+    var year = this.state.date.split("/")[2];
+    month = month < 10 ? "0" + month : month;
+    day = day < 10 ? "0" + day : day;
 
-    // call for NYTimes event info
+    var date = new Date(this.state.date);
+    var nextDate = new Date();
+    nextDate.setDate(date.getDate()+1);
+    nextDate = nextDate.toLocaleString().split(",")[0];
+
+    var nextMonth = nextDate.split("/")[0];
+    var nextDay = nextDate.split("/")[1];
+    var nextYear = nextDate.split("/")[2];
+    nextMonth = nextMonth < 10 ? "0" + nextMonth : nextMonth;
+    nextDay = nextDay < 10 ? "0" + nextDay : nextDay;
+    var ApiDateRange = "date_range=" + year + "-" + month + "-" + day + ":" + nextYear + "-" + nextMonth + "-" + nextDay;
+
+    var categoryFilter;
+    if (this.state.checkboxSummary == "All") {
+      categoryFilter = "";
+    } else {
+      categoryFilter = "filters=category:(Jazz Classical)";
+    }
+
     $.ajax({
-      url: "http://api.nytimes.com/svc/events/v2/listings.jsonp?ll=40.862040%2C-73.885699&radius=12000&api-key=" + nyTimesKey,
+      url: "http://api.nytimes.com/svc/events/v2/listings.jsonp?" + categoryFilter + "ll=40.862040%2C-73.885699&radius=12000&api-key=" + nyTimesKey,
       method: "get",
       dataType: "jsonp",
       crossDomain: "true",
       success: function(data) {
-        var events = this.state.genericEvents;
+        var events = {};
         events.nyTimesEvents = data;
-        prevData = this.state.data;
+        var prevData = this.state.data;
         events.nyTimesEvents.results.forEach(function(ele, idx) {
           var name = ele.event_name;
           var url  = ele.venue_detail_url;
@@ -108,7 +187,6 @@ var App = React.createClass({
         });
         this.setState({genericEvents: events, data: shuffle(prevData)});
       }.bind(this),
-
       error: function(err) {
         console.log(err);
       }
@@ -122,7 +200,7 @@ var App = React.createClass({
       success: function(data) {
         var events = this.state.genericEvents;
         events.meetupEvents = data;
-        prevData = this.state.data;
+        var prevData = this.state.data;
         events.meetupEvents.results.forEach(function(ele, idx) {
           var name = ele.name;
           var url = ele.event_url;
@@ -144,6 +222,39 @@ var App = React.createClass({
         });
         this.setState({genericEvents: events, data: shuffle(prevData)});
 
+      }.bind(this),
+      error: function(err) {
+        console.log(err);
+      }
+    });
+  },
+
+  componentWillMount: function() {
+    // call for session user information
+
+    this.callAPIs();
+
+    $.ajax({
+      url: "/sessions/which_user",
+      method: "get",
+      dataType: "json",
+      success: function(data) {
+        this.setState({user: data.user, userEvents: data.events});
+      }.bind(this),
+      error: function(err) {
+        console.log(err);
+      }
+    });
+
+    // call for Eventbrite event info
+    $.ajax({
+      url : eventbriteAPICall,
+      method: 'get',
+      dataType: 'json',
+      success: function(data) {
+        var events = this.state.genericEvents;
+        events.eventbriteEvents = data;
+        this.setState({genericEvents: events });
       }.bind(this),
       error: function(err) {
         console.log(err);

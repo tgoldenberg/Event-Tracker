@@ -147,10 +147,19 @@ GEM
       rails-assets-moment (>= 2.5.0)
     rails-assets-google-map-react (1.0.0)
     rails-assets-jquery (2.1.4)
-    rails-assets-moment (2.10.3)
+    rails-assets-jquery-ui (1.11.4)
+      rails-assets-jquery (>= 1.6)
+    rails-assets-moment (2.8.2)
     rails-assets-react (0.12.0)
+    rails-assets-react-date-picker (0.8.0)
+      rails-assets-moment (= 2.8.2)
+      rails-assets-react (< 0.14)
+      rails-assets-react-onclickoutside (= 0.2.1)
+      rails-assets-tether (= 0.6.5)
+    rails-assets-react-onclickoutside (0.2.1)
     rails-assets-reactable (0.10.2)
       rails-assets-react (= 0.12)
+    rails-assets-tether (0.6.5)
     rails-deprecated_sanitizer (1.0.3)
       activesupport (>= 4.2.0.alpha)
     rails-dom-testing (1.0.6)
@@ -255,7 +264,9 @@ DEPENDENCIES
   rails (= 4.2.1)
   rails-assets-fullcalendar!
   rails-assets-google-map-react!
+  rails-assets-jquery-ui!
   rails-assets-moment!
+  rails-assets-react-date-picker!
   rails-assets-reactable!
   react-rails
   react-router-rails (~> 0.13.3)

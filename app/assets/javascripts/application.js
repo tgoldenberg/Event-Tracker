@@ -21,5 +21,7 @@
 //= require moment
 //= require fullcalendar
 //= require reactable
+//= require datepicker-jquery
+//= require react-date-picker
 //= require components
 //= require_tree .

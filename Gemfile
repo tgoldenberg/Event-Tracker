@@ -28,6 +28,8 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-moment'
   gem 'rails-assets-google-map-react'
   gem 'rails-assets-reactable'
+  gem 'rails-assets-react-date-picker'
+  gem 'rails-assets-jquery-ui'
 end
 
 

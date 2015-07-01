@@ -5,6 +5,13 @@ var Discover = React.createClass({
   handleCheckboxChange: function(target) {
     this.props.handleCheckboxChange(target);
   },
+
+  componentDidMount: function() {
+      $("#datepicker").datepicker({inline: true,
+                showOtherMonths: true,
+                dayNamesMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],});
+  },
+  
   render: function() {
 
     return (

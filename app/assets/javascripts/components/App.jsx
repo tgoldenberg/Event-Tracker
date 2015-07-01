@@ -41,6 +41,9 @@ var App = React.createClass({
   },
 
   componentWillMount: function() {
+
+
+
     // call for session user information
     $.ajax({
       url: "/sessions/which_user",

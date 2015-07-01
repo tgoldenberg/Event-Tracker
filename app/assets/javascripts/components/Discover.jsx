@@ -11,7 +11,6 @@ var Discover = React.createClass({
                 showOtherMonths: true,
                 dayNamesMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],});
   },
-  
   render: function() {
 
     return (
@@ -32,9 +31,11 @@ var Discover = React.createClass({
                 </div>
                 <div>
                   <label>Location</label>
-                  <div>
-                    <input type="text" placeholder="location" className="form-control calendar" id="datepicker"/>
-                  </div>
+                    <div>
+                      <input className="controls form-control" type="text" placeholder="location" id="pac-input" name="place_id"/>
+                      <img src="https://raw.githubusercontent.com/tgoldenberg/EatMe-DrinkMe/master/app/assets/images/powered-by-google-on-white.png" alt='powered by google'/>
+                      <input type="hidden" id="place_id" />
+                    </div>
                 </div>
                 <div className="filter trigger">
                   <button>Search Events</button>

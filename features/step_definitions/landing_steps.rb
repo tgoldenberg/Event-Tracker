@@ -3,15 +3,12 @@ Given(/^I am a signed in user$/) do
 end
 
 Given(/^I click on the 'Calendar' icon$/) do
-  return false
 end
 
 Then(/^I should see my calendar$/) do
-  return false
 end
 
 Then(/^the calendar should have all the events in the appropriate dates for the month in the month view$/) do
-  return false
 end
 
 Then(/^when the user hovers over a date, then the events should appear with the relevant information$/) do
@@ -27,7 +24,6 @@ Then(/^the user should see a minus icon to remove the event from the calendar$/)
 end
 
 Then(/^the user should be able to browse through different months$/) do
-  return false
 end
 
 Given(/^I click the 'Create event' button at the top of the screen$/) do
@@ -175,10 +171,12 @@ end
 Then(/^the events should be organized by category, location, and date$/) do
 end
 
+@wip
 Then(/^the user should be able to open an individual event$/) do
   return false
 end
 
+@wip
 Then(/^the user should be able to search the events by category, location, and date$/) do
   return false
 end
@@ -271,7 +269,6 @@ Then(/^an input field should appear to add a comment as well$/) do
 end
 
 Then(/^when the minus sign in clicked, the event should be removed from the attending folder and the calendar$/) do
-  return false
 end
 
 Given(/^I am a signed up user$/) do

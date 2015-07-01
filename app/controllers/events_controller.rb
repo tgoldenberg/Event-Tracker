@@ -1,7 +1,12 @@
 class EventsController < ApplicationController
   def add
     @user = User.find(params[:user_id])
-    @user.events << Event.create(event_params)
+    @event =  Event.find_by(title: event_params[:title])
+    if @event
+      EventUser.create(event_id: @event.id, user_id: @user.id)
+    else
+      @user.events << Event.create(event_params)
+    end
     render json: @user.events.to_json
   end
 

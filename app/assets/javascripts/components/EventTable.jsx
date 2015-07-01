@@ -47,7 +47,6 @@ var EventTable = React.createClass({
         }
       });
     }
-    return false;
   },
   render: function() {
 
@@ -58,18 +57,21 @@ var EventTable = React.createClass({
       weekday: "long", year: "numeric", month: "short",
       day: "numeric", hour: "2-digit", minute: "2-digit"
       };
-      var addButton;
+      var addButton = <a href="#" data-id={idx} onClick={this.handleClick} className="submit-button glyphicon glyphicon-plus"></a>;
       var urls = [1, 2];
-      this.props.userEvents.map(function(e) {
-        urls.push(e.title);
-      });
-      urls.forEach(function(ele) {
-        if (ele == event.name) {
-          addButton = <a href="#" data-id={idx} onClick={this.handleClick} className="submit-button glyphicon glyphicon-minus"></a>;
-        } else {
-          addButton = <a href="#" data-id={idx} onClick={this.handleClick} className="submit-button glyphicon glyphicon-plus"></a>;
-        }
-      }.bind(this));
+      if (this.props.userEvents) {
+        this.props.userEvents.map(function(e) {
+          urls.push(e.title);
+        });
+        urls.forEach(function(ele) {
+          if (ele == event.name) {
+            addButton = <a href="#" data-id={idx} onClick={this.handleClick} className="submit-button glyphicon glyphicon-minus"></a>;
+          } else {
+            addButton = <a href="#" data-id={idx} onClick={this.handleClick} className="submit-button glyphicon glyphicon-plus"></a>;
+          }
+        }.bind(this));
+      }
+
       var startTime = event.startTime.toLocaleTimeString("en-us", dateOptions);
       var endTime = event.endTime == "n/A" ? "n/A" : event.endTime.toLocaleTimeString("en-us", dateOptions);
       eventTable.push({category: event.category, name: <a href={event.url}>{event.name}</a>, location: event.location, start_time: startTime, end_time: endTime, add: addButton});

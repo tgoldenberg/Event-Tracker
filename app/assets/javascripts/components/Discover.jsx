@@ -6,10 +6,60 @@ var Discover = React.createClass({
     this.props.handleCheckboxChange(target);
   },
 
+  handleSearch: function() {
+    this.props.handleSearch();
+
+  },
+
+  handleNewLocation: function(location) {
+    this.props.handleNewLocation(location);
+  },
+
+  handleNewDate: function(e) {
+    var date = $(e.target).val();
+
+    this.props.handleNewDate(date);
+  },
+
   componentDidMount: function() {
-      $("#datepicker").datepicker({inline: true,
-                showOtherMonths: true,
-                dayNamesMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],});
+
+    var func = this.handleNewLocation;
+
+    $("#datepicker").datepicker({inline: true,
+              showOtherMonths: true,
+              dayNamesMin: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],});
+
+    $('#datepicker').change(function(e) {
+      this.handleNewDate(e);
+    }.bind(this));
+
+    initialize();
+
+      var componentForm = {
+        name: 'short_name',
+        street_number: 'short_name',
+        route: 'long_name',
+        locality: 'long_name',
+        administrative_area_level_1: 'short_name',
+        postal_code: 'short_name'
+      };
+
+      var placeID = ""
+
+      function initialize() {
+
+        var input = /** @type {HTMLInputElement} */(
+            document.getElementById('pac-input'));
+
+        var autocomplete = new google.maps.places.Autocomplete(input);
+
+        google.maps.event.addListener(autocomplete, 'place_changed', function() {
+          var place = autocomplete.getPlace();
+          document.getElementById("place_id").value = place.geometry.location;
+          func(place.geometry.location);
+        });
+      };
+
   },
   render: function() {
 
@@ -26,7 +76,7 @@ var Discover = React.createClass({
                 <div>
                   <label>Date</label>
                   <div>
-                    <input type="text" placeholder="date" className="form-control calendar" id="datepicker"/>
+                    <input type="text" placeholder="date" onChange={this.handleNewDate} className="form-control calendar" id="datepicker"/>
                   </div>
                 </div>
                 <div>
@@ -34,11 +84,11 @@ var Discover = React.createClass({
                     <div>
                       <input className="controls form-control" type="text" placeholder="location" id="pac-input" name="place_id"/>
                       <img src="https://raw.githubusercontent.com/tgoldenberg/EatMe-DrinkMe/master/app/assets/images/powered-by-google-on-white.png" alt='powered by google'/>
-                      <input type="hidden" id="place_id" />
+                      <input type="hidden" id="place_id"/>
                     </div>
                 </div>
                 <div className="filter trigger">
-                  <button>Search Events</button>
+                  <button onClick={this.handleSearch} >Search Events</button>
                 </div>
               </div>
             </div>

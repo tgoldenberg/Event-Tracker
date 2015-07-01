@@ -28,6 +28,11 @@ var App = React.createClass({
             data: [],
             attendingEvents: [],
             userEvents: [],
+            date: new Date(),
+            location: {
+              latitude: fordhamLatitude,
+              longitude: fordhamLongitude
+            },
             checkboxSummary: "All",
             checkbox: {
 
@@ -40,10 +45,13 @@ var App = React.createClass({
             };
   },
 
+  handleSearch: function() {
+    // change AJAX search criteria
+    console.log("NEW SEARCH");
+    debugger
+  },
+
   componentWillMount: function() {
-
-
-
     // call for session user information
     $.ajax({
       url: "/sessions/which_user",
@@ -142,9 +150,21 @@ var App = React.createClass({
       }
     });
   },
+
   addEvent: function(events) {
-    console.log("ADD EVENT");
+    console.log("ADD/REMOVE EVENT");
     this.setState({userEvents: events});
+  },
+
+  handleNewDate: function(date) {
+    this.setState({date: date});
+  },
+
+  handleNewLocation: function(location) {
+    // console.log("NEW LOCATION", location);
+    var latitude = location.A;
+    var longitude = location.F;
+    this.setState({location: {latitude: latitude, longitude: longitude}});
   },
 
   handleCheckboxChange: function(target) {
@@ -160,7 +180,6 @@ var App = React.createClass({
         summary += category + " ";
       }
     }
-    console.log(summary);
     if (summary.length == 0 || summary.split(" ").length == 6) {
       summary = "All";
     }
@@ -173,7 +192,6 @@ var App = React.createClass({
   },
 
   render: function() {
-
     return (
       <div>
         <div className="container-fluid">
@@ -189,6 +207,9 @@ var App = React.createClass({
               handleCheckboxChange={this.handleCheckboxChange}
               checkbox={this.state.checkbox}
               checkboxSummary={this.state.checkboxSummary}
+              handleSearch={this.handleSearch}
+              handleNewDate={this.handleNewDate}
+              handleNewLocation={this.handleNewLocation}
                />
           </div>
         </div>

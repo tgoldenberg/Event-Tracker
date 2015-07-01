@@ -23,7 +23,21 @@ var eventbriteAPICall = eventbriteBaseURL + eventbriteVersion + "/events/search/
 
 var App = React.createClass({
   getInitialState: function() {
-    return {user: {}, genericEvents: {}, data: [], attendingEvents: [], userEvents: []};
+    return {user: {},
+            genericEvents: {},
+            data: [],
+            attendingEvents: [],
+            userEvents: [],
+            checkboxSummary: "All",
+            checkbox: {
+
+              Music: false,
+              Sports: false,
+              Tech: false,
+              Arts: false,
+              Comedy: false
+              }
+            };
   },
 
   componentWillMount: function() {
@@ -130,6 +144,26 @@ var App = React.createClass({
     this.setState({userEvents: events});
   },
 
+  handleCheckboxChange: function(target) {
+    var checkbox = this.state.checkbox;
+    var value = !checkbox[target];
+    var categories = this.state.checkbox;
+
+    checkbox[target] = value;
+    var summary = "";
+    for (category in this.state.checkbox) {
+      // console.log(category);
+      if (categories[category]) {
+        summary += category + " ";
+      }
+    }
+    console.log(summary);
+    if (summary.length == 0 || summary.split(" ").length == 6) {
+      summary = "All";
+    }
+    this.setState({checkbox: checkbox, checkboxSummary: summary});
+  },
+
   handleHover: function(e) {
     e.preventDefault();
     $('.sliding-panel-content, .sliding-panel-fade-screen').removeClass('is-visible');
@@ -144,7 +178,15 @@ var App = React.createClass({
             <SideNavbar />
           </div>
           <div className="col-sm-11" onMouseOver={this.handleHover}>
-            <RouteHandler events={this.state.data} user={this.state.user} handleNewEvent={this.addEvent} userEvents={this.state.userEvents}/>
+            <RouteHandler
+              events={this.state.data}
+              user={this.state.user}
+              handleNewEvent={this.addEvent}
+              userEvents={this.state.userEvents}
+              handleCheckboxChange={this.handleCheckboxChange}
+              checkbox={this.state.checkbox}
+              checkboxSummary={this.state.checkboxSummary}
+               />
           </div>
         </div>
       </div>

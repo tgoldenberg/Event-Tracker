@@ -2,6 +2,9 @@ var Discover = React.createClass({
   handleNewEvent: function(event) {
     this.props.handleNewEvent(event);
   },
+  handleCheckboxChange: function(target) {
+    this.props.handleCheckboxChange(target);
+  },
   render: function() {
 
     return (
@@ -13,12 +16,7 @@ var Discover = React.createClass({
             <h1>MyTracks</h1>
             <div className="search-tools">
               <div className="filters">
-                <div>
-                  <label>Category</label>
-                  <div>
-                    <input type="text" placeholder="category" className="form-control calendar" id="datepicker"/>
-                  </div>
-                </div>
+                <Checkbox handleChange={this.handleCheckboxChange} checkbox={this.props.checkbox} checkboxSummary={this.props.checkboxSummary}/>
                 <div>
                   <label>Date</label>
                   <div>

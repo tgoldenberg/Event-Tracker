@@ -6,6 +6,12 @@
   border: 0;
 }
 
+#checkbox-list {
+  position: absolute;
+  width: 16%;
+  z-index: 999;
+}
+
 body {
   height: 100%;
   height: auto !important;

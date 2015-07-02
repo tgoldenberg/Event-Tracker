@@ -68,43 +68,41 @@ var App = React.createClass({
     nextDay = nextDay < 10 ? "0" + nextDay : nextDay;
     var ApiDateRange = "date_range=" + year + "-" + month + "-" + day + ":" + nextYear + "-" + nextMonth + "-" + nextDay;
 
-    var categoryFilter;
+    var categoryFilter = "";
+    var meetupFilter = "";
     var categoryParams = this.state.checkboxSummary;
+    console.log(categoryParams);
 
-    if (this.state.checkboxSummary == "All") {
-      categoryFilter = "";
-    } else {
-      switch(categoryParams) {
-        case "Music":
-
-        categoryFilter = "filters=category:(Jazz Classical)";
-        console.log(categoryFilter);
+    switch(categoryParams) {
+      case "Music ":
+        categoryFilter = "filters=category:Jazz";
+        meetupFilter = "topic=music";
         break;
-        case "Sports":
-        categoryFilter = "";
+      case "Arts ":
+        categoryFilter = "filters=category:Art";
+        meetupFilter = "topic=art";
         break;
-        case "Tech":
-        categoryFilter = "";
+      case "Comedy ":
+        categoryFilter = "filters=category:Comedy";
+        meetupFilter = "topic=comedy";
         break;
-        case "Comedy":
-        categoryFilter = "";
+      case "Tech ":
+        categoryFilter = "filters=category:Technology";
+        meetupFilter = "topic=technology";
         break;
-        case "Arts":
-        categoryFilter = "filters=category: Art";
+      case "Sports ":
+        categoryFilter = "filters=category:Sports";
+        meetupFilter = "topic=sports"
         break;
-      }
-
     }
-    console.log(categoryFilter);
 
     $.ajax({
-      url: "http://api.nytimes.com/svc/events/v2/listings.jsonp?" + categoryFilter + "&limit=40&ll=40.862040%2C-73.885699&radius=12000&api-key=" + nyTimesKey,
+      url: "http://api.nytimes.com/svc/events/v2/listings.jsonp?" + categoryFilter + "&limit=40&ll=40.862040%2C-73.885699&radius=25000&api-key=" + nyTimesKey,
       method: "get",
       dataType: "jsonp",
       crossDomain: "true",
       success: function(nyTimesData) {
         var events = {};
-        console.log(nyTimesData);
         events.nyTimesEvents = nyTimesData;
         events.nyTimesEvents.results.forEach(function(ele, idx) {
           var name = ele.event_name;
@@ -121,7 +119,40 @@ var App = React.createClass({
           }
           apiData.push({category: category, name: name, url: url, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude});
         });
-        console.log(apiData);
+        this.setState({data: apiData});
+
+      }.bind(this),
+      error: function(err) {
+        console.log(err);
+      }
+    });
+
+    $.ajax({
+      url: "https://api.meetup.com/2/open_events?&sign=true&photo-host=public&lat=40.862040&lon=-73.885699&" + meetupFilter + "&radius=15&page=20&order=time&status=upcoming&key=d301d1e5146535e25514724a1e2858",
+      method: 'get',
+      dataType: "jsonp",
+      success: function(meetupData) {
+        var events = this.state.genericEvents;
+        events.meetupEvents = meetupData;
+        events.meetupEvents.results.forEach(function(ele, idx) {
+          var name = ele.name;
+          var url = ele.event_url;
+          var location = ele.venue ? ele.venue.name + ", " + ele.venue.address_1 : "";
+          var startTime = new Date(ele.time);
+          var date2 = new Date(ele.time); // The 0 there is the key, which sets the date to the epoch
+          var duration = ele.duration / 60000;
+          date2.setMinutes(date2.getMinutes() + duration);
+          var endTime = date2;
+          if ( !endTime.getTime()) {
+            endTime = "n/A";
+          }
+
+          var latitude = ele.venue ? ele.venue.lat : "";
+          var longitude = ele.venue ? ele.venue.lon : "";
+          var category = ele.group.who;
+          apiData.push({category: category, name: name, url: url, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude})
+
+        });
         this.setState({data: apiData});
 
       }.bind(this),

@@ -176,9 +176,7 @@ Then(/^the user should be able to open an individual event$/) do
   return false
 end
 
-@wip
 Then(/^the user should be able to search the events by category, location, and date$/) do
-  return false
 end
 
 Then(/^the user should be able to search events by a specific keyword\(s\)$/) do
@@ -192,7 +190,6 @@ Then(/^I should my MyTracks events mapped to a Google Maps map$/) do
 end
 
 Given(/^I change the search parameters by category, location, or date$/) do
-  return false
 end
 
 Then(/^the map should reflect the new search parameters$/) do

@@ -31,7 +31,7 @@ var LandingHero = React.createClass({
               </div>
             </div>
           </div>
-          <EventTable events={this.props.events} />
+          <EventTable events={this.props.events} href="/users/new"/>
       </div>
     );
   }

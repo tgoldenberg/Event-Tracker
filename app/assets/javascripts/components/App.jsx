@@ -67,7 +67,7 @@ var App = React.createClass({
     var nextYear = nextDate.split("/")[2];
     nextMonth = nextMonth < 10 ? "0" + nextMonth : nextMonth;
     nextDay = nextDay < 10 ? "0" + nextDay : nextDay;
-    var APIDateRange = "&date_range=" + year + "-" + month + "-" + day + ":" + nextYear + "-" + nextMonth + "-" + nextDay + "&sort=times_pick+asc";
+    var APIDateRange = "&date_range=" + year + "-" + month + "-" + day + ":" + nextYear + "-" + nextMonth + "-" + nextDay;
     console.log(APIDateRange);
     var meetupApiDate = new Date(this.state.date).getTime();
     var meetupApiEndDate = meetupApiDate + (1000*60*60*24*7);
@@ -100,7 +100,9 @@ var App = React.createClass({
         categoryFilter = "filters=category:Sports";
         meetupFilter = "topic=sports"
         break;
-
+      default:
+        categoryFilter="&sort=times_pick+asc";
+        break;
     }
 
     $.ajax({
@@ -167,6 +169,7 @@ var App = React.createClass({
         console.log(err);
       }
     });
+    return false;
   },
 
   callAPIs: function() {

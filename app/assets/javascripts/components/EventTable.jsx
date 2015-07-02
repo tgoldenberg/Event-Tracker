@@ -2,7 +2,7 @@ var Table = Reactable.Table;
 
 var EventTable = React.createClass({
   getInitialState: function() {
-    return {events: this.props.events, eventTable: []};
+    return {events: this.props.events, eventTable: [], href: this.props.href || "#"};
   },
   handleClick: function(e) {
     e.preventDefault();
@@ -51,7 +51,7 @@ var EventTable = React.createClass({
   render: function() {
 
     var eventTable = [];
-
+    var hrefParam = this.state.href;
     this.props.events.map(function(event, idx) {
       var dateOptions = {
       weekday: "long", year: "numeric", month: "short",
@@ -65,9 +65,12 @@ var EventTable = React.createClass({
         });
         urls.forEach(function(ele) {
           if (ele == event.name) {
-            addButton = <a href="#" data-id={idx} onClick={this.handleClick} className="submit-button glyphicon glyphicon-minus"></a>;
+            addButton = <a href={this.state.href} data-id={idx} onClick={this.handleClick} className="submit-button glyphicon glyphicon-minus"></a>;
           } else {
-            addButton = <a href="#" data-id={idx} onClick={this.handleClick} className="submit-button glyphicon glyphicon-plus"></a>;
+            addButton = <a href={this.state.href} data-id={idx} onClick={this.handleClick} className="submit-button glyphicon glyphicon-plus"></a>;
+          }
+          if (hrefParam != "#") {
+            addButton = <a href="/users/new" className="submit-button glyphicon glyphicon-plus"></a>;
           }
         }.bind(this));
       }

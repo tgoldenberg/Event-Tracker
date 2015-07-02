@@ -22,6 +22,7 @@ var nyTimesAPICall = nyTimesBaseURL + nyTimesVersion + "/listings.json?ll=40.862
 var eventbriteAPICall = eventbriteBaseURL + eventbriteVersion + "/events/search/?sort_by=date&location.within=20mi&location.latitude=" + fordhamLatitude + "&location.longitude=" + fordhamLongitude + "&token=" + eventbriteKey;
 
 var App = React.createClass({
+
   getInitialState: function() {
     return {user: {},
             genericEvents: {},
@@ -53,12 +54,12 @@ var App = React.createClass({
     var month = this.state.date.split("/")[0];
     var day = this.state.date.split("/")[1];
     var year = this.state.date.split("/")[2];
-    month = month < 10 ? "0" + month : month;
-    day = day < 10 ? "0" + day : day;
 
     var date = new Date(this.state.date);
-    var nextDate = new Date();
-    nextDate.setDate(date.getDate()+1);
+    var nextDate = new Date(date.getTime() + 1000*60*60*24*7);
+
+
+    nextDate.setMinutes(date.getMinutes() + 60*24);
     nextDate = nextDate.toLocaleString().split(",")[0];
 
     var nextMonth = nextDate.split("/")[0];
@@ -66,10 +67,15 @@ var App = React.createClass({
     var nextYear = nextDate.split("/")[2];
     nextMonth = nextMonth < 10 ? "0" + nextMonth : nextMonth;
     nextDay = nextDay < 10 ? "0" + nextDay : nextDay;
-    var ApiDateRange = "date_range=" + year + "-" + month + "-" + day + ":" + nextYear + "-" + nextMonth + "-" + nextDay;
+    var APIDateRange = "&date_range=" + year + "-" + month + "-" + day + ":" + nextYear + "-" + nextMonth + "-" + nextDay + "&sort=times_pick+asc";
+    console.log(APIDateRange);
+    var meetupApiDate = new Date(this.state.date).getTime();
+    var meetupApiEndDate = meetupApiDate + (1000*60*60*24*7);
 
     var categoryFilter = "";
     var meetupFilter = "";
+    var latitude = this.state.location.latitude;
+    var longitude = this.state.location.longitude;
     var categoryParams = this.state.checkboxSummary;
     console.log(categoryParams);
 
@@ -94,10 +100,11 @@ var App = React.createClass({
         categoryFilter = "filters=category:Sports";
         meetupFilter = "topic=sports"
         break;
+
     }
 
     $.ajax({
-      url: "http://api.nytimes.com/svc/events/v2/listings.jsonp?" + categoryFilter + "&limit=40&ll=40.862040%2C-73.885699&radius=25000&api-key=" + nyTimesKey,
+      url: "http://api.nytimes.com/svc/events/v2/listings.jsonp?"+ categoryFilter + APIDateRange + "&limit=40&ll=" + latitude + "," + longitude + "&radius=25000&api-key=" + nyTimesKey,
       method: "get",
       dataType: "jsonp",
       crossDomain: "true",
@@ -119,7 +126,7 @@ var App = React.createClass({
           }
           apiData.push({category: category, name: name, url: url, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude});
         });
-        this.setState({data: apiData});
+        this.setState({data: shuffle(apiData)});
 
       }.bind(this),
       error: function(err) {
@@ -128,7 +135,7 @@ var App = React.createClass({
     });
 
     $.ajax({
-      url: "https://api.meetup.com/2/open_events?&sign=true&photo-host=public&lat=40.862040&lon=-73.885699&" + meetupFilter + "&radius=15&page=20&order=time&status=upcoming&key=d301d1e5146535e25514724a1e2858",
+      url: "https://api.meetup.com/2/open_events?&sign=true&photo-host=public&lat="+ latitude + "&lon=" + longitude + "&" + meetupFilter + "&time=" + meetupApiDate + "," + meetupApiEndDate + "&radius=15&page=20&order=time&status=upcoming&key=d301d1e5146535e25514724a1e2858",
       method: 'get',
       dataType: "jsonp",
       success: function(meetupData) {
@@ -153,7 +160,7 @@ var App = React.createClass({
           apiData.push({category: category, name: name, url: url, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude})
 
         });
-        this.setState({data: apiData});
+        this.setState({data: shuffle(apiData)});
 
       }.bind(this),
       error: function(err) {
@@ -166,33 +173,8 @@ var App = React.createClass({
     var genericEvents = this.state.genericEvents;
     var data = this.state.data;
 
-    var month = this.state.date.split("/")[0];
-    var day = this.state.date.split("/")[1];
-    var year = this.state.date.split("/")[2];
-    month = month < 10 ? "0" + month : month;
-    day = day < 10 ? "0" + day : day;
-
-    var date = new Date(this.state.date);
-    var nextDate = new Date();
-    nextDate.setDate(date.getDate()+1);
-    nextDate = nextDate.toLocaleString().split(",")[0];
-
-    var nextMonth = nextDate.split("/")[0];
-    var nextDay = nextDate.split("/")[1];
-    var nextYear = nextDate.split("/")[2];
-    nextMonth = nextMonth < 10 ? "0" + nextMonth : nextMonth;
-    nextDay = nextDay < 10 ? "0" + nextDay : nextDay;
-    var ApiDateRange = "date_range=" + year + "-" + month + "-" + day + ":" + nextYear + "-" + nextMonth + "-" + nextDay;
-
-    var categoryFilter;
-    if (this.state.checkboxSummary == "All") {
-      categoryFilter = "";
-    } else {
-      categoryFilter = "filters=category:(Jazz Classical)";
-    }
-
     $.ajax({
-      url: "http://api.nytimes.com/svc/events/v2/listings.jsonp?" + categoryFilter + "ll=40.862040%2C-73.885699&radius=12000&api-key=" + nyTimesKey,
+      url: "http://api.nytimes.com/svc/events/v2/listings.jsonp?limit=40&ll=40.862040%2C-73.885699&radius=12000&api-key=" + nyTimesKey,
       method: "get",
       dataType: "jsonp",
       crossDomain: "true",

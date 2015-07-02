@@ -2,7 +2,7 @@ var Calendar = React.createClass({
   componentDidMount: function() {
     var events = this.props.userEvents;
     var calendarEvents = events.map(function(event){
-      return {title: event.title, start: event.start_time, end: event.end_time};
+      return {title: event.name, start: event.startTime, end: event.endTime};
     });
     console.log(this.props.userEvents);
     var calendar = $('#calendar').fullCalendar({
@@ -24,7 +24,7 @@ var Calendar = React.createClass({
   render: function() {
     var events = this.props.userEvents;
     var calendarEvents = events.map(function(event){
-      return {title: event.title, start: event.start_time, end: event.end_time};
+      return {title: event.name, start: event.startTime, end: event.endTime};
     });
     console.log(this.props.userEvents);
     var calendar = $('#calendar').fullCalendar({

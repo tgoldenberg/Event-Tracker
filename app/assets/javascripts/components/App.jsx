@@ -45,6 +45,13 @@ var App = React.createClass({
               }
             };
   },
+  renderAttending: function() {
+    console.log("ATTENDING EVENTS HERE");
+    var userEvents = this.state.userEvents;
+    console.log(userEvents);
+    console.log(this.state.data);
+    this.setState({data: userEvents});
+  },
 
   handleSearch: function() {
     // change AJAX search criteria
@@ -323,7 +330,7 @@ var App = React.createClass({
       <div>
         <div className="container-fluid">
           <div className="col-sm-1">
-            <SideNavbar />
+            <SideNavbar userEvents={this.state.userEvents} renderAttending={this.renderAttending} />
           </div>
           <div className="col-sm-11" onMouseOver={this.handleHover}>
             <RouteHandler

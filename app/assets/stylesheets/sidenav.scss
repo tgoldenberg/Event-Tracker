@@ -2,12 +2,21 @@
   height: 100%;
   width: 5.5em;
   background: #222;
+
   .glyphicon {
     font-size: 2.2em;
     color: white;
     margin-top: .7em;
     width: 100%;
   }
+  .glyphicon.move-down {
+    margin-top: 228px;
+  }
+}
+.folder-link {
+  border-left: 1px solid black;
+  border-radius: 2px;
+  margin-right: 1px;
 }
 .profile-info {
 

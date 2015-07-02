@@ -17,7 +17,7 @@ var EventTable = React.createClass({
         url: "/events/add",
         method: "get",
         dataType: "json",
-        data: {user_id: user_id, event: {title: event.name, category: event.category, url: event.url, location: event.location, latitude: event.latitude, longitude: event.longitude, start_time: event.startTime, end_time: event.endTime}},
+        data: {user_id: user_id, event: {name: event.name, category: event.category, url: event.url, location: event.location, latitude: event.latitude, longitude: event.longitude, startTime: event.startTime, endTime: event.endTime}},
         success: function(data) {
           console.log(data);
           target.context.className = "submit-button glyphicon glyphicon-minus";

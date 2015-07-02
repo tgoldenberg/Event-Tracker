@@ -40,7 +40,8 @@ var Map = React.createClass({
         <div className="well hero-panel">
           <Icons/>
         </div><br/>
-        <div id="map-canvas"></div>
+      <div id="map-canvas"></div><br/><br/>
+        <ReactMap center={[parseFloat(fordhamLatitude), parseFloat(fordhamLongitude)]} zoom={12} events={this.props.events}/>
       </div>
 
     );

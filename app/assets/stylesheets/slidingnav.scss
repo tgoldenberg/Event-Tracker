@@ -15,6 +15,15 @@
   position: fixed;
   left: 0;
   top:0;
+  .glyph-holder {
+    position: relative;
+  }
+}
+.folder-title {
+  color: #eee;
+  font-size: 1.2em;
+  line-height: 1.7;
+  font-weight: 400;
 }
 
 .sliding-panel-content {
@@ -34,7 +43,6 @@
   @include transition(all 0.25s linear);
   background: $sliding-panel-background;
   z-index: 999;
-  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 
   ul {

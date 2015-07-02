@@ -3,10 +3,10 @@ class CreateEvents < ActiveRecord::Migration
     create_table :events do |t|
       t.integer :category_id
       t.string :category
-      t.string :title
+      t.string :name
       t.text :description
-      t.date :start_time
-      t.date :end_time
+      t.date :startTime
+      t.date :endTime
       t.string :latitude
       t.string :longitude
       t.string :location

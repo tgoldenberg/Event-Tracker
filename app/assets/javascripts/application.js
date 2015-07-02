@@ -23,5 +23,6 @@
 //= require reactable
 //= require datepicker-jquery
 //= require react-date-picker
+//= require googleMapReact
 //= require components
 //= require_tree .

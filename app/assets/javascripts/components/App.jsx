@@ -23,28 +23,29 @@ var eventbriteAPICall = eventbriteBaseURL + eventbriteVersion + "/events/search/
 
 var App = React.createClass({
 
-  getInitialState: function() {
-    return {user: {},
-            genericEvents: {},
-            data: [],
-            attendingEvents: [],
-            userEvents: [],
-            date: new Date().toLocaleString().split(",")[0],
-            location: {
-              latitude: fordhamLatitude,
-              longitude: fordhamLongitude
-            },
-            checkboxSummary: "All",
-            checkbox: {
+getInitialState: function() {
+  return {user: {},
+          genericEvents: {},
+          data: [],
+          attendingEvents: [],
+          userEvents: [],
+          date: new Date().toLocaleString().split(",")[0],
+          location: {
+            latitude: fordhamLatitude,
+            longitude: fordhamLongitude
+          },
+          checkboxSummary: "All",
+          checkbox: {
 
-              Music: false,
-              Sports: false,
-              Tech: false,
-              Arts: false,
-              Comedy: false
-              }
-            };
+            Music: false,
+            Sports: false,
+            Tech: false,
+            Arts: false,
+            Comedy: false
+            }
+          };
   },
+
   renderAttending: function() {
     var userEvents = this.state.userEvents;
     this.setState({data: userEvents});
@@ -61,7 +62,6 @@ var App = React.createClass({
 
     var date = new Date(this.state.date);
     var nextDate = new Date(date.getTime() + 1000*60*60*24*7);
-
 
     nextDate.setMinutes(date.getMinutes() + 60*24);
     nextDate = nextDate.toLocaleString().split(",")[0];
@@ -123,6 +123,7 @@ var App = React.createClass({
           var location = ele.street_address + ", " + ele.neighborhood;
           var startTime = new Date(ele.recurring_start_date);
           var category = ele.category;
+          var description = ele.web_description;
           var latitude = ele.geocode_latitude;
           var longitude = ele.geocode_longitude;
           if (ele.recurring_end_date != undefined) {
@@ -130,7 +131,7 @@ var App = React.createClass({
           } else {
             var endTime = "n/A";
           }
-          apiData.push({category: category, name: name, url: url, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude});
+          apiData.push({category: category, name: name, url: url, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude, decription: description});
         });
         this.setState({data: shuffle(apiData)});
 
@@ -151,6 +152,7 @@ var App = React.createClass({
           var name = ele.name;
           var url = ele.event_url;
           var location = ele.venue ? ele.venue.name + ", " + ele.venue.address_1 : "";
+          var description = ele.description;
           var startTime = new Date(ele.time);
           var date2 = new Date(ele.time); // The 0 there is the key, which sets the date to the epoch
           var duration = ele.duration / 60000;
@@ -163,7 +165,7 @@ var App = React.createClass({
           var latitude = ele.venue ? ele.venue.lat : "";
           var longitude = ele.venue ? ele.venue.lon : "";
           var category = ele.group.who;
-          apiData.push({category: category, name: name, url: url, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude})
+          apiData.push({category: category, name: name, url: url, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude, description: description});
 
         });
         this.setState({data: shuffle(apiData)});
@@ -195,6 +197,7 @@ var App = React.createClass({
           var location = ele.street_address + ", " + ele.neighborhood;
           var startTime = new Date(ele.recurring_start_date);
           var category = ele.category;
+          var description = ele.web_description;
           var latitude = ele.geocode_latitude;
           var longitude = ele.geocode_longitude;
           if (ele.recurring_end_date != undefined) {
@@ -202,7 +205,7 @@ var App = React.createClass({
           } else {
             var endTime = "n/A";
           }
-          prevData.push({category: category, name: name, url: url, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude});
+          prevData.push({category: category, name: name, url: url, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude, description: description});
 
         });
         this.setState({genericEvents: events, data: shuffle(prevData)});
@@ -226,6 +229,7 @@ var App = React.createClass({
           var url = ele.event_url;
           var location = ele.venue ? ele.venue.name + ", " + ele.venue.address_1 : "";
           var startTime = new Date(ele.time);
+          var description = ele.description;
           var date2 = new Date(ele.time); // The 0 there is the key, which sets the date to the epoch
           var duration = ele.duration / 60000;
           date2.setMinutes(date2.getMinutes() + duration);
@@ -237,7 +241,7 @@ var App = React.createClass({
           var latitude = ele.venue ? ele.venue.lat : "";
           var longitude = ele.venue ? ele.venue.lon : "";
           var category = ele.group.who;
-          prevData.push({category: category, name: name, url: url, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude})
+          prevData.push({category: category, name: name, url: url, location: location, startTime: startTime, endTime: endTime, latitude: latitude, longitude: longitude, description: description});
 
         });
         this.setState({genericEvents: events, data: shuffle(prevData)});
@@ -251,7 +255,6 @@ var App = React.createClass({
 
   componentWillMount: function() {
     // call for session user information
-
     this.callAPIs();
 
     $.ajax({

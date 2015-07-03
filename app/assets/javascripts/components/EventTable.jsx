@@ -1,9 +1,11 @@
 var Table = Reactable.Table;
 
 var EventTable = React.createClass({
+
   getInitialState: function() {
     return {events: this.props.events, eventTable: [], href: this.props.href || "#"};
   },
+
   handleClick: function(e) {
     e.preventDefault();
     var target = $(e.target);
@@ -13,11 +15,12 @@ var EventTable = React.createClass({
     var glyphiconClass = $(e.target).context.className;
 
     if (glyphiconClass.split(" ")[2] == "glyphicon-plus") {
+      console.log(event.description);
       $.ajax({
         url: "/events/add",
-        method: "get",
+        method: "post",
         dataType: "json",
-        data: {user_id: user_id, event: {name: event.name, category: event.category, url: event.url, location: event.location, latitude: event.latitude, longitude: event.longitude, startTime: event.startTime, endTime: event.endTime}},
+        data: {user_id: user_id, event: {name: event.name, category: event.category, url: event.url, location: event.location, latitude: event.latitude, longitude: event.longitude, startTime: event.startTime, endTime: event.endTime, description: event.description}},
         success: function(data) {
           target.context.className = "submit-button glyphicon glyphicon-minus";
           this.props.handleNewEvent(data);
@@ -47,10 +50,12 @@ var EventTable = React.createClass({
       });
     }
   },
+
   render: function() {
 
     var eventTable = [];
     var hrefParam = this.state.href;
+
     this.props.events.map(function(event, idx) {
       var dateOptions = {
       weekday: "long", year: "numeric", month: "short",

@@ -13,7 +13,7 @@ Rails.application.routes.draw do
 
   root 'pages#home'
 
-  get 'events/add' => 'events#add', as: 'add_event'
+  post 'events/add' => 'events#add', as: 'add_event'
 
   get 'events/remove' => 'events#remove', as: 'remove_event'
 end

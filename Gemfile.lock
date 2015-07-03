@@ -129,6 +129,8 @@ GEM
       coderay (~> 1.1.0)
       method_source (~> 0.8.1)
       slop (~> 3.4)
+    puma (2.11.1)
+      rack (>= 1.1, < 2.0)
     rack (1.6.4)
     rack-cors (0.4.0)
     rack-test (0.6.3)
@@ -170,6 +172,11 @@ GEM
       rails-deprecated_sanitizer (>= 1.0.1)
     rails-html-sanitizer (1.0.2)
       loofah (~> 2.0)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.4)
+    rails_stdout_logging (0.0.3)
     railties (4.2.1)
       actionpack (= 4.2.1)
       activesupport (= 4.2.1)
@@ -263,6 +270,7 @@ DEPENDENCIES
   neat
   pg
   pry
+  puma (= 2.11.1)
   rack-cors
   rails (= 4.2.1)
   rails-assets-fullcalendar!
@@ -271,6 +279,7 @@ DEPENDENCIES
   rails-assets-moment!
   rails-assets-react-date-picker!
   rails-assets-reactable!
+  rails_12factor
   react-rails
   react-router-rails (~> 0.13.3)
   rspec-rails

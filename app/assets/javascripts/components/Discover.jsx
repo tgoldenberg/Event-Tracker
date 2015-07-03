@@ -95,7 +95,11 @@ var Discover = React.createClass({
             </div>
             <Icons />
           </div>
-          <EventTable events={this.props.events} user={this.props.user} handleNewEvent={this.handleNewEvent} userEvents={this.props.userEvents} />
+          <EventTable
+            events={this.props.events}
+            user={this.props.user}
+            handleNewEvent={this.handleNewEvent} 
+            userEvents={this.props.userEvents} />
         </div>
 
       </div>

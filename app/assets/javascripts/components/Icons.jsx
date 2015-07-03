@@ -14,6 +14,7 @@ var Icons = React.createClass({
           </Link>
         </div>
         <div className="view-button-holder">
+          
           <Link to="/calendar">
             <span className="glyphicon glyphicon-calendar tooltip-item">
               <div className="tooltip">

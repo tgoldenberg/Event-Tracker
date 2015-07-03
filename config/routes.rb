@@ -16,4 +16,8 @@ Rails.application.routes.draw do
   post 'events/add' => 'events#add', as: 'add_event'
 
   get 'events/remove' => 'events#remove', as: 'remove_event'
+
+  get 'events/:id' => 'events#show', as: 'event'
+
+  post '/events' => 'events#create', as: 'create_event'
 end

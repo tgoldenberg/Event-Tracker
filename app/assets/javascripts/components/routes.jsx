@@ -6,5 +6,6 @@ this.MyRoutes = (
     <DefaultRoute handler={Discover} />
     <Route handler={Calendar} path="calendar" />
     <Route handler={Map} path="map" />
+    <Route handler={Events} path="events/:id" />
   </Route>
 );

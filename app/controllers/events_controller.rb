@@ -18,6 +18,19 @@ class EventsController < ApplicationController
     render json: @user.events.to_json
   end
 
+  def create
+    @event = Event.find_by(name: event_params[:name])
+    if !@event
+      @event = Event.create(event_params)
+    end
+    render json: @event.to_json
+  end
+
+  def show
+    @event = Event.find(params[:id])
+    render json: @event.to_json
+  end
+
   private
 
   def event_params

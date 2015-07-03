@@ -22,14 +22,14 @@ var SideNavbar = React.createClass({
       <div className="side-nav-holder" onMouseOver={this.handleHover}>
         <div className="side-navbar hidden-xs">
           <div className="glyph-holder">
-            <span className="glyphicon glyphicon-home"></span>
+            <Link to="/"><span className="glyphicon glyphicon-home"></span></Link>
             <span className="glyphicon glyphicon-folder-open"></span>
             <span className="glyphicon glyphicon-globe"></span>
             <span className="glyphicon glyphicon-user"></span>
           </div>
         </div>
         <div className="js-menu sliding-panel-content hidden-xs">
-          <p className="home-side-nav side-nav-link"><a href="/">Home</a></p>
+          <p className="home-side-nav side-nav-link"><Link to="/">Home</Link></p>
           <p className="side-nav-link"><a href="#" onClick={this.expandFolders}>Folders</a></p>
             <ol className="hidden folder-list">
               <li className="folder-title"><a href="#" className="folder-link">Suggested</a></li>

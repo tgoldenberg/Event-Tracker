@@ -6,6 +6,24 @@ var EventTable = React.createClass({
     return {events: this.props.events, eventTable: [], href: this.props.href || "#"};
   },
 
+  showEvent: function(idx, e) {
+    e.preventDefault();
+    console.log(idx);
+    var event = this.props.events[idx];
+    $.ajax({
+      url: "/events",
+      method: "post",
+      dataType: "json",
+      data: {event: event},
+      success: function(data) {
+        window.location.hash = "#/events/" + data.id;
+      },
+      error: function(err) {
+        console.log(err);
+      }
+    });
+  },
+
   handleClick: function(e) {
     e.preventDefault();
     var target = $(e.target);
@@ -86,7 +104,7 @@ var EventTable = React.createClass({
         var endTime = event.endTime == "n/A" ? "n/A" : event.endTime.toLocaleTimeString("en-us", dateOptions);
       }
 
-      eventTable.push({category: event.category, name: <a href={event.url}>{event.name}</a>, location: event.location, start_time: startTime, end_time: endTime, add: addButton});
+      eventTable.push({category: event.category, name: <a href="#" onClick={this.showEvent.bind(this, idx)} >{event.name}</a>, location: event.location, start_time: startTime, end_time: endTime, add: addButton});
     }.bind(this))
     return (
       <Table className="table" sortable={['location', 'name', 'startTime']} data={eventTable} itemsPerPage={10}/>

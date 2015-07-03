@@ -19,7 +19,6 @@ var EventTable = React.createClass({
         dataType: "json",
         data: {user_id: user_id, event: {name: event.name, category: event.category, url: event.url, location: event.location, latitude: event.latitude, longitude: event.longitude, startTime: event.startTime, endTime: event.endTime}},
         success: function(data) {
-          console.log(data);
           target.context.className = "submit-button glyphicon glyphicon-minus";
           this.props.handleNewEvent(data);
           return false;
@@ -74,9 +73,14 @@ var EventTable = React.createClass({
           }
         }.bind(this));
       }
+      if (event.created_at) {
+        var startTime = event.startTime;
+        var endTime = event.endTime;
+      } else {
+        var startTime = event.startTime.toLocaleTimeString("en-us", dateOptions);
+        var endTime = event.endTime == "n/A" ? "n/A" : event.endTime.toLocaleTimeString("en-us", dateOptions);
+      }
 
-      var startTime = event.startTime.toLocaleTimeString("en-us", dateOptions);
-      var endTime = event.endTime == "n/A" ? "n/A" : event.endTime.toLocaleTimeString("en-us", dateOptions);
       eventTable.push({category: event.category, name: <a href={event.url}>{event.name}</a>, location: event.location, start_time: startTime, end_time: endTime, add: addButton});
     }.bind(this))
     return (

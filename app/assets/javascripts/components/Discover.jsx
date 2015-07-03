@@ -6,7 +6,8 @@ var Discover = React.createClass({
     this.props.handleCheckboxChange(target);
   },
 
-  handleSearch: function() {
+  handleSearch: function(e) {
+    e.preventDefault();
     this.props.handleSearch();
 
   },
@@ -66,7 +67,7 @@ var Discover = React.createClass({
     return (
       <div className="discover">
         <MyFolders />
-        <div className="hero-box col-sm-9">
+        <div className="hero-box col-sm-10">
           <br/>
           <div className="well hero-panel">
             <h1>MyTracks</h1>

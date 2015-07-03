@@ -46,10 +46,7 @@ var App = React.createClass({
             };
   },
   renderAttending: function() {
-    console.log("ATTENDING EVENTS HERE");
     var userEvents = this.state.userEvents;
-    console.log(userEvents);
-    console.log(this.state.data);
     this.setState({data: userEvents});
   },
 
@@ -75,7 +72,7 @@ var App = React.createClass({
     nextMonth = nextMonth < 10 ? "0" + nextMonth : nextMonth;
     nextDay = nextDay < 10 ? "0" + nextDay : nextDay;
     var APIDateRange = "&date_range=" + year + "-" + month + "-" + day + ":" + nextYear + "-" + nextMonth + "-" + nextDay;
-    console.log(APIDateRange);
+
     var meetupApiDate = new Date(this.state.date).getTime();
     var meetupApiEndDate = meetupApiDate + (1000*60*60*24*7);
 
@@ -84,7 +81,6 @@ var App = React.createClass({
     var latitude = this.state.location.latitude;
     var longitude = this.state.location.longitude;
     var categoryParams = this.state.checkboxSummary;
-    console.log(categoryParams);
 
     switch(categoryParams) {
       case "Music ":
@@ -108,7 +104,8 @@ var App = React.createClass({
         meetupFilter = "topic=sports"
         break;
       default:
-        categoryFilter="&sort=times_pick+asc";
+        categoryFilter="";
+        meetupFilter="";
         break;
     }
 
@@ -286,7 +283,6 @@ var App = React.createClass({
   },
 
   addEvent: function(events) {
-    console.log("ADD/REMOVE EVENT");
     this.setState({userEvents: events});
   },
 
@@ -323,6 +319,11 @@ var App = React.createClass({
   handleHover: function(e) {
     e.preventDefault();
     $('.sliding-panel-content, .sliding-panel-fade-screen').removeClass('is-visible');
+
+    $('.glyphicon-globe').removeClass('move-down');
+    if ($('.folder-list').hasClass('hidden') == false) {
+      $('.folder-list').addClass('hidden');
+    }
   },
 
   render: function() {
@@ -330,7 +331,12 @@ var App = React.createClass({
       <div>
         <div className="container-fluid">
           <div className="col-sm-1">
-            <SideNavbar userEvents={this.state.userEvents} renderAttending={this.renderAttending} />
+            <SideNavbar
+              userEvents={this.state.userEvents}
+              renderAttending={this.renderAttending}
+              handleSearch={this.handleSearch}
+               />
+
           </div>
           <div className="col-sm-11" onMouseOver={this.handleHover}>
             <RouteHandler

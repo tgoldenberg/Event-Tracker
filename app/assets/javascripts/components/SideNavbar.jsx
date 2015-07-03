@@ -33,7 +33,7 @@ var SideNavbar = React.createClass({
           <p className="side-nav-link"><a href="#" onClick={this.expandFolders}>Folders</a></p>
             <ol className="hidden folder-list">
               <li className="folder-title"><a href="#" className="folder-link">Suggested</a></li>
-              <li className="folder-title"><a href="#" className="folder-link">MyTracks</a></li>
+              <li className="folder-title"><a href="#" className="folder-link" onClick={this.props.handleSearch}>MyTracks</a></li>
               <li className="folder-title"><a href="#" className="folder-link" onClick={this.renderAttending}>Attending</a></li>
                 <ol className="hidden">{attendingEvents}</ol>
             </ol>

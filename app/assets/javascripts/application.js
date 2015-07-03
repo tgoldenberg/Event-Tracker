@@ -14,6 +14,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
+//= require jquery-ui/tooltip
 //= require react
 //= require nav
 //= require react_ujs
@@ -21,7 +22,7 @@
 //= require react_router_ujs
 //= require moment
 //= require fullcalendar
-
+//= require qtip
 //= require reactable
 //= require mapIcons
 //= require datepicker-jquery

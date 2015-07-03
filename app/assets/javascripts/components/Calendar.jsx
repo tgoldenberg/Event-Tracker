@@ -1,7 +1,7 @@
 var Calendar = React.createClass({
   componentDidMount: function() {
     if(this.isMounted()) {
-      $('a[title]').qtip();
+      $('a[title]').tooltip();
       var tooltip = $('<div/>').qtip({
     		id: 'fullcalendar',
     		prerender: true,

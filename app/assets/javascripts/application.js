@@ -11,10 +11,10 @@
 // about supported directives.
 //
 
-
 //= require jquery
 //= require jquery_ujs
 //= require react
+//= require nav
 //= require react_ujs
 //= require react_router
 //= require react_router_ujs

@@ -16,14 +16,21 @@ var Map = React.createClass({
       var map = new google.maps.Map(mapCanvas, mapOptions);
       var myLatLng = new google.maps.LatLng(44.5403, -78.5463)
 
-
+      var infoWindow = new google.maps.InfoWindow();
       events.map(function(event) {
         var marker = new google.maps.Marker({
         position: new google.maps.LatLng(event.latitude, event.longitude),
         map: map,
-        title: "Title"
+        title: event.name,
+        icon: '/assets/images/marker.svg'
         });
         marker.setMap(map);
+        google.maps.event.addListener(marker, 'mouseover', function() {
+          infoWindow.close();
+          infoWindow.setContent(event.name);
+          infoWindow.open(map, marker);
+        });
+
       });
     }
 
@@ -41,7 +48,6 @@ var Map = React.createClass({
           <Icons/>
         </div><br/>
       <div id="map-canvas"></div><br/><br/>
-        <ReactMap center={[parseFloat(fordhamLatitude), parseFloat(fordhamLongitude)]} zoom={12} events={this.props.events}/>
       </div>
 
     );

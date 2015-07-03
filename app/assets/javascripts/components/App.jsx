@@ -253,7 +253,7 @@ getInitialState: function() {
     });
   },
 
-  componentWillMount: function() {
+  componentDidMount: function() {
     // call for session user information
     this.callAPIs();
 
@@ -353,6 +353,7 @@ getInitialState: function() {
               handleSearch={this.handleSearch}
               handleNewDate={this.handleNewDate}
               handleNewLocation={this.handleNewLocation}
+              rendered={this.state.userEvents}
                />
           </div>
         </div>

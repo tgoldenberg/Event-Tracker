@@ -93,12 +93,12 @@ var Discover = React.createClass({
                 </div>
               </div>
             </div>
-            <Icons />
+            <Icons userEvents={this.props.userEvents}/>
           </div>
           <EventTable
             events={this.props.events}
             user={this.props.user}
-            handleNewEvent={this.handleNewEvent} 
+            handleNewEvent={this.handleNewEvent}
             userEvents={this.props.userEvents} />
         </div>
 

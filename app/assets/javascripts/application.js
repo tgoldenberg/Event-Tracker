@@ -21,6 +21,7 @@
 //= require moment
 //= require fullcalendar
 //= require reactable
+//= require mapIcons
 //= require datepicker-jquery
 //= require react-date-picker
 //= require googleMapReact

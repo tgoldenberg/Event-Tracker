@@ -4,3 +4,26 @@
   background: #e6e6e6;
   margin: auto;
 }
+
+table tbody tr th.table-active {
+  background: #d4d4d4;
+}
+
+.col-sm-4 {
+  height: 32em;
+  overflow-y: auto;
+}
+.table-header {
+  background: darken($orange, 5%);
+  color: white;
+  height: 2em;
+}
+.table-content {
+  background: #fdfdfd;
+}
+tr:hover > .table-content{
+  background: #e6e6e6;
+}
+.map {
+  background: white;
+}
